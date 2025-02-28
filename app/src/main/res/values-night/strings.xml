@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="headlines">Headlines</string>
+    <string name="saved">Saved</string>
+    <string name="source">Source</string>
+    <string name="news_app">News app</string>
+    <string name="description">description</string>
+</resources>
