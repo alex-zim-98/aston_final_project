@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomToolbar">
+        <attr name="status" format="enum">
+            <enum name="defaultStatus" value="0"/>
+            <enum name="filterStatus" value="1"/>
+            <enum name="searchStatus" value="2"/>
+            <enum name="detailsStatus" value="3"/>
+        </attr>
+        <attr name="toolBarTitle" format="string"/>
+    </declare-styleable>
+</resources>
