@@ -3,12 +3,16 @@ package com.example.aston_final_project
 import android.app.Application
 import com.example.aston_final_project.di.AppComponent
 import com.example.aston_final_project.di.DaggerAppComponent
+import com.example.aston_final_project.views.App
 
-class MyApp: Application() {
-    lateinit var component: AppComponent
-
-    override fun onCreate() {
-        super.onCreate()
-        component = DaggerAppComponent.factory().create(applicationContext)
+class MyApp: Application(), App {
+    private val component by lazy {
+        DaggerAppComponent.factory().create(applicationContext)
     }
+
+    override fun getAppComponent(): AppComponent {
+        return component
+    }
+
+
 }
