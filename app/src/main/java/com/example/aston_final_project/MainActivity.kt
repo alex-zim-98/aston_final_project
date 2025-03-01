@@ -2,18 +2,14 @@ package com.example.aston_final_project
 
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
 import com.example.aston_final_project.databinding.ActivityMainBinding
-import com.example.aston_final_project.di.AppComponent
+import com.example.aston_final_project.views.App
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private val appComponent by lazy {
-        (application as MyApp).component
+        (application as App).getAppComponent()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         appComponent.inject(this)
@@ -33,9 +29,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun bottomNavigationViewClickListener(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
-            R.id.action_headlines -> replaceFragment(HeadlinesFragment.newInstance())
-            R.id.action_saved -> replaceFragment(SavedFragment.newInstance())
-            R.id.action_source -> replaceFragment(SourceFragment.newInstance())
+            R.id.action_headlines -> replaceFragment(this, HeadlinesFragment.newInstance())
+            R.id.action_saved -> replaceFragment(this, SavedFragment.newInstance())
+            R.id.action_source -> replaceFragment(this, SourceFragment.newInstance())
             else -> throw IllegalArgumentException("Menu item $menuItem doesn't exist")
         }
     }

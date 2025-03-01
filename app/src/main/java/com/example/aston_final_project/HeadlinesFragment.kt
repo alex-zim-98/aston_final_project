@@ -1,18 +1,29 @@
 package com.example.aston_final_project
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import com.example.aston_final_project.databinding.FragmentHeadlinesBinding
+import com.example.aston_final_project.viewmodel.SearchViewModel
+import com.example.aston_final_project.views.SearchToolbar
+import com.example.aston_final_project.views.ToolbarController
 
-class HeadlinesFragment : Fragment() {
+class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>() {
+    lateinit var searchViewModel: SearchViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_headlines, container, false)
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentHeadlinesBinding {
+        return FragmentHeadlinesBinding.inflate(layoutInflater, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //searchViewModel =
     }
 
     companion object {
