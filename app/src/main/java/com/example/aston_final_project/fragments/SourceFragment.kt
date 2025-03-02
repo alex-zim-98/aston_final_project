@@ -1,4 +1,4 @@
-package com.example.aston_final_project
+package com.example.aston_final_project.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
