@@ -6,10 +6,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.example.aston_final_project.SearchState
 import com.example.aston_final_project.databinding.FragmentHeadlinesBinding
 import com.example.aston_final_project.viewmodel.SearchViewModel
 import com.example.aston_final_project.viewmodel.ViewModelFactory
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>() {
@@ -33,9 +38,18 @@ class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchViewModel.testLiveData.observe(viewLifecycleOwner) {
-            Log.d("HeadlinesFragment", it.toString())
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                searchViewModel.searchState.collect {
+                    when(it) {
+                        is SearchState.StartedChangeText -> Log.d("HeadlinesFragment", "entered")
+                        SearchState.EndChangeText -> {}
+                    }
+                }
+            }
         }
+
     }
 
     companion object {

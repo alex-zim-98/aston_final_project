@@ -8,6 +8,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import com.example.aston_final_project.R
+import com.example.aston_final_project.SearchState
 import com.example.aston_final_project.viewmodel.SearchViewModel
 import com.example.aston_final_project.find
 import com.google.android.material.textfield.TextInputEditText
@@ -35,7 +36,7 @@ class SearchToolbar(
 
     private fun editTextListener() {
         editTextSearch.doOnTextChanged { text, _, _, _ ->
-            searchViewModel.sendTextQuery(text.toString())
+            searchViewModel.sendTextQuery(SearchState.StartedChangeText(text.toString()))
         }
     }
 
@@ -44,6 +45,7 @@ class SearchToolbar(
             clearText()
             hideKeyboard()
             action.invoke()
+            searchViewModel.sendTextQuery(SearchState.EndChangeText)
         }
     }
 

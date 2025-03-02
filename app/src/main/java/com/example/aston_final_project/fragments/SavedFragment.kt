@@ -35,9 +35,7 @@ class SavedFragment : BaseFragment<FragmentSavedBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchViewModel.testLiveData.observe(viewLifecycleOwner) {
-            Log.d("SavedFragment", it.toString())
-        }
+
     }
 
     companion object {
