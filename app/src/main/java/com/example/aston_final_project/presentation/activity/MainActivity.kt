@@ -8,7 +8,7 @@ import com.example.aston_final_project.databinding.ActivityMainBinding
 import com.example.aston_final_project.presentation.fragment.HeadlinesFragment
 import com.example.aston_final_project.presentation.fragment.SavedFragment
 import com.example.aston_final_project.presentation.fragment.SourceFragment
-import com.example.aston_final_project.util.replaceFragment
+import com.example.aston_final_project.app.util.replaceFragment
 import com.example.aston_final_project.app.App
 
 class MainActivity : AppCompatActivity() {

@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.aston_final_project.R
-import com.example.aston_final_project.util.find
+import com.example.aston_final_project.app.util.find
 import com.example.aston_final_project.presentation.view.model.DefaultToolbarModel
 import com.example.aston_final_project.presentation.view.handler.DefaultToolbarViewSearchHandler
 import com.example.aston_final_project.presentation.view.EnrichableToolbar

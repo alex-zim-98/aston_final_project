@@ -10,7 +10,7 @@ import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import com.example.aston_final_project.R
 import com.example.aston_final_project.presentation.viewmodel.SearchState
 import com.example.aston_final_project.presentation.viewmodel.SearchViewModel
-import com.example.aston_final_project.util.find
+import com.example.aston_final_project.app.util.find
 import com.example.aston_final_project.presentation.view.handler.SearchToolbarBackHandler
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
