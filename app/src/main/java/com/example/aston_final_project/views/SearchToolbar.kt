@@ -8,9 +8,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import com.example.aston_final_project.R
-import com.example.aston_final_project.SearchToolbarTextQueryHandler
 import com.example.aston_final_project.viewmodel.SearchViewModel
-import com.example.aston_final_project.viewmodel.ViewModelFactory
 import com.example.aston_final_project.find
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -22,6 +20,8 @@ class SearchToolbar(
     defStyle: Int = 0
 ) : BaseToolbar(context, attributeSet, defStyle),
     SearchToolbarBackHandler {
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var searchViewModel: SearchViewModel
 
