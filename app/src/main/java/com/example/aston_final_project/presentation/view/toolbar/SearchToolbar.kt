@@ -1,4 +1,4 @@
-package com.example.aston_final_project.views
+package com.example.aston_final_project.presentation.view.toolbar
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,10 +8,10 @@ import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import com.example.aston_final_project.R
-import com.example.aston_final_project.SearchToolbarTextQueryHandler
-import com.example.aston_final_project.viewmodel.SearchViewModel
-import com.example.aston_final_project.viewmodel.ViewModelFactory
-import com.example.aston_final_project.find
+import com.example.aston_final_project.presentation.viewmodel.SearchState
+import com.example.aston_final_project.presentation.viewmodel.SearchViewModel
+import com.example.aston_final_project.util.find
+import com.example.aston_final_project.presentation.view.handler.SearchToolbarBackHandler
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import javax.inject.Inject
@@ -22,6 +22,8 @@ class SearchToolbar(
     defStyle: Int = 0
 ) : BaseToolbar(context, attributeSet, defStyle),
     SearchToolbarBackHandler {
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var searchViewModel: SearchViewModel
 
@@ -35,7 +37,10 @@ class SearchToolbar(
 
     private fun editTextListener() {
         editTextSearch.doOnTextChanged { text, _, _, _ ->
-            searchViewModel.sendTextQuery(text.toString())
+            searchViewModel.sendTextQuery(SearchState.StartedChangeText(text.toString()))
+        }
+        editTextSearch.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) searchViewModel.sendTextQuery(SearchState.EndChangeText)
         }
     }
 
@@ -43,8 +48,12 @@ class SearchToolbar(
         imageViewBack.setOnClickListener {
             clearText()
             hideKeyboard()
+            unFocusEditText()
             action.invoke()
         }
+    }
+    private fun unFocusEditText() {
+        editTextSearch.isFocusable = false
     }
 
     private fun clearText() {

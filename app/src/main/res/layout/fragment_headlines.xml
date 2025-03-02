@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".HeadlinesFragment">
+    tools:context=".presentation.fragment.HeadlinesFragment">
 
-    <com.example.aston_final_project.views.CustomToolbar
+    <com.example.aston_final_project.presentation.view.toolbar.CustomToolbar
         android:id="@+id/customToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
