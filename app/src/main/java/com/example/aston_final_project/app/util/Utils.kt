@@ -1,4 +1,4 @@
-package com.example.aston_final_project.util
+package com.example.aston_final_project.app.util
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

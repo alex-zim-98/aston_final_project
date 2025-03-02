@@ -43,12 +43,19 @@ android {
 
 dependencies {
 
+    implementation(libs.moxy)
+    implementation(libs.moxy.androidx)
+    implementation(libs.moxy.material)
+    kapt(libs.moxy.compiler)
+
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
 
     implementation(libs.adapter.rxjava3)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation(libs.rxjava)
+    implementation(libs.rxandroid)
 
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
