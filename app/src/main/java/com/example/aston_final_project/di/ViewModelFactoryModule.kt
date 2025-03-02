@@ -1,7 +1,7 @@
 package com.example.aston_final_project.di
 
 import androidx.lifecycle.ViewModel
-import com.example.aston_final_project.viewmodel.SearchViewModel
+import com.example.aston_final_project.presentation.viewmodel.SearchViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

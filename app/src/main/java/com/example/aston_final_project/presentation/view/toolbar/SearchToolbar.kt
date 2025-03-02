@@ -1,4 +1,4 @@
-package com.example.aston_final_project.views
+package com.example.aston_final_project.presentation.view.toolbar
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,9 +8,10 @@ import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import com.example.aston_final_project.R
-import com.example.aston_final_project.SearchState
-import com.example.aston_final_project.viewmodel.SearchViewModel
-import com.example.aston_final_project.find
+import com.example.aston_final_project.presentation.viewmodel.SearchState
+import com.example.aston_final_project.presentation.viewmodel.SearchViewModel
+import com.example.aston_final_project.util.find
+import com.example.aston_final_project.presentation.view.handler.SearchToolbarBackHandler
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import javax.inject.Inject

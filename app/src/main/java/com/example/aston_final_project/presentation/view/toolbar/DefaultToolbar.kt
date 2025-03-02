@@ -1,17 +1,21 @@
-package com.example.aston_final_project.views
+package com.example.aston_final_project.presentation.view.toolbar
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.aston_final_project.R
-import com.example.aston_final_project.find
+import com.example.aston_final_project.util.find
+import com.example.aston_final_project.presentation.view.model.DefaultToolbarModel
+import com.example.aston_final_project.presentation.view.handler.DefaultToolbarViewSearchHandler
+import com.example.aston_final_project.presentation.view.EnrichableToolbar
 
 class DefaultToolbar(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyle: Int = 0
-) : BaseToolbar(context, attributeSet, defStyle), EnrichableToolbar<DefaultToolbarModel>, DefaultToolbarViewSearchHandler {
+) : BaseToolbar(context, attributeSet, defStyle), EnrichableToolbar<DefaultToolbarModel>,
+    DefaultToolbarViewSearchHandler {
     private val imageViewFilter by find<ImageView>(R.id.imageViewFilter)
     private val imageViewSearch by find<ImageView>(R.id.imageViewSearch)
     private val textViewTitle by find<TextView>(R.id.textViewTitle)

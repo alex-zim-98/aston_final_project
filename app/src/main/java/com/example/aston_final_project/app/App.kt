@@ -1,4 +1,4 @@
-package com.example.aston_final_project.views
+package com.example.aston_final_project.app
 
 import com.example.aston_final_project.di.AppComponent
 

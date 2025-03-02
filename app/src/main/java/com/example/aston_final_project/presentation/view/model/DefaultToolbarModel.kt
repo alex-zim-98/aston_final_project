@@ -1,4 +1,4 @@
-package com.example.aston_final_project.views
+package com.example.aston_final_project.presentation.view.model
 
 import javax.inject.Inject
 

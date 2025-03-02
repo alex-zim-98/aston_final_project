@@ -1,9 +1,8 @@
-package com.example.aston_final_project
+package com.example.aston_final_project.app
 
 import android.app.Application
 import com.example.aston_final_project.di.AppComponent
 import com.example.aston_final_project.di.DaggerAppComponent
-import com.example.aston_final_project.views.App
 
 class MyApp: Application(), App {
     private val component by lazy {

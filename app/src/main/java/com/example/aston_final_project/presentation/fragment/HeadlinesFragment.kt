@@ -1,4 +1,4 @@
-package com.example.aston_final_project.fragments
+package com.example.aston_final_project.presentation.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -10,10 +10,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.aston_final_project.SearchState
+import com.example.aston_final_project.presentation.viewmodel.SearchState
 import com.example.aston_final_project.databinding.FragmentHeadlinesBinding
-import com.example.aston_final_project.viewmodel.SearchViewModel
-import com.example.aston_final_project.viewmodel.ViewModelFactory
+import com.example.aston_final_project.presentation.viewmodel.SearchViewModel
+import com.example.aston_final_project.presentation.viewmodel.ViewModelFactory
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

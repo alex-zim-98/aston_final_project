@@ -1,6 +1,6 @@
 package com.example.aston_final_project.di
 
-import com.example.aston_final_project.views.CustomToolbar
+import com.example.aston_final_project.presentation.view.toolbar.CustomToolbar
 import dagger.BindsInstance
 import dagger.Subcomponent
 

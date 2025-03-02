@@ -1,15 +1,15 @@
-package com.example.aston_final_project.activity
+package com.example.aston_final_project.presentation.activity
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.aston_final_project.R
 import com.example.aston_final_project.databinding.ActivityMainBinding
-import com.example.aston_final_project.fragments.HeadlinesFragment
-import com.example.aston_final_project.fragments.SavedFragment
-import com.example.aston_final_project.fragments.SourceFragment
-import com.example.aston_final_project.replaceFragment
-import com.example.aston_final_project.views.App
+import com.example.aston_final_project.presentation.fragment.HeadlinesFragment
+import com.example.aston_final_project.presentation.fragment.SavedFragment
+import com.example.aston_final_project.presentation.fragment.SourceFragment
+import com.example.aston_final_project.util.replaceFragment
+import com.example.aston_final_project.app.App
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding

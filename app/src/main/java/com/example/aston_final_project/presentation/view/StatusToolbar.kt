@@ -1,4 +1,4 @@
-package com.example.aston_final_project.views
+package com.example.aston_final_project.presentation.view
 
 enum class StatusToolbar(val value: Int) {
     DEFAULT(0),

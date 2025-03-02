@@ -1,9 +1,9 @@
 package com.example.aston_final_project.di
 
 import android.content.Context
-import com.example.aston_final_project.fragments.HeadlinesFragment
-import com.example.aston_final_project.activity.MainActivity
-import com.example.aston_final_project.fragments.SavedFragment
+import com.example.aston_final_project.presentation.fragment.HeadlinesFragment
+import com.example.aston_final_project.presentation.activity.MainActivity
+import com.example.aston_final_project.presentation.fragment.SavedFragment
 import dagger.BindsInstance
 import dagger.Component
 

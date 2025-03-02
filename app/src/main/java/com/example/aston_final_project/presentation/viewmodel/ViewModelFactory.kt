@@ -1,4 +1,4 @@
-package com.example.aston_final_project.viewmodel
+package com.example.aston_final_project.presentation.viewmodel
 
 
 import androidx.lifecycle.ViewModel

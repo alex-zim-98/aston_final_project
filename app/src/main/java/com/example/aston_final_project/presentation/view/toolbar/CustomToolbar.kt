@@ -1,10 +1,14 @@
-package com.example.aston_final_project.views
+package com.example.aston_final_project.presentation.view.toolbar
 
 import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.aston_final_project.R
 import com.example.aston_final_project.di.CustomToolbarComponent
+import com.example.aston_final_project.app.App
+import com.example.aston_final_project.presentation.view.model.DefaultToolbarModel
+import com.example.aston_final_project.presentation.view.StatusToolbar
+import com.example.aston_final_project.presentation.view.ToolbarController
 import javax.inject.Inject
 
 class CustomToolbar @JvmOverloads constructor(
