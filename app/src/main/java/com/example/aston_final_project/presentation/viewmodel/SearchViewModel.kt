@@ -6,8 +6,6 @@ import com.example.aston_final_project.domain.repository.RemoteRepository
 import com.example.aston_final_project.domain.usecase.SearchNewsUseCase
 import com.example.aston_final_project.presentation.mapper.RequestMapper
 import com.example.aston_final_project.presentation.viewmodel.request.FilteredNewsRequest
-import com.example.aston_final_project.presentation.viewmodel.request.HeadlinesRequest
-import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.flow.MutableStateFlow
