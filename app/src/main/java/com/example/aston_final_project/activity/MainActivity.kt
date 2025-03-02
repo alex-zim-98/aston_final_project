@@ -1,9 +1,14 @@
-package com.example.aston_final_project
+package com.example.aston_final_project.activity
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.example.aston_final_project.R
 import com.example.aston_final_project.databinding.ActivityMainBinding
+import com.example.aston_final_project.fragments.HeadlinesFragment
+import com.example.aston_final_project.fragments.SavedFragment
+import com.example.aston_final_project.fragments.SourceFragment
+import com.example.aston_final_project.replaceFragment
 import com.example.aston_final_project.views.App
 
 class MainActivity : AppCompatActivity() {
@@ -11,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private val appComponent by lazy {
         (application as App).getAppComponent()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         appComponent.inject(this)
         super.onCreate(savedInstanceState)

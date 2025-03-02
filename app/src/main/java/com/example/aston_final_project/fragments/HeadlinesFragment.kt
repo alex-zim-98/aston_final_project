@@ -1,18 +1,28 @@
-package com.example.aston_final_project
+package com.example.aston_final_project.fragments
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.aston_final_project.databinding.FragmentHeadlinesBinding
 import com.example.aston_final_project.viewmodel.SearchViewModel
-import com.example.aston_final_project.views.SearchToolbar
-import com.example.aston_final_project.views.ToolbarController
+import com.example.aston_final_project.viewmodel.ViewModelFactory
+import javax.inject.Inject
 
 class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>() {
-    lateinit var searchViewModel: SearchViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private val searchViewModel: SearchViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[SearchViewModel::class.java]
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        component.inject(this)
+    }
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -23,7 +33,9 @@ class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //searchViewModel =
+        searchViewModel.testLiveData.observe(viewLifecycleOwner) {
+            Log.d("HeadlinesFragment", it.toString())
+        }
     }
 
     companion object {
