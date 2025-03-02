@@ -54,6 +54,8 @@ dependencies {
     implementation(libs.adapter.rxjava3)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation(libs.rxjava)
+    implementation(libs.rxandroid)
 
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
