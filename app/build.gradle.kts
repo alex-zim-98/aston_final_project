@@ -43,6 +43,11 @@ android {
 
 dependencies {
 
+    implementation(libs.moxy)
+    implementation(libs.moxy.androidx)
+    implementation(libs.moxy.material)
+    kapt(libs.moxy.compiler)
+
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
 
