@@ -2,10 +2,8 @@ package com.example.aston_final_project.views
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.inputmethod.InputMethodManager
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.aston_final_project.R
-import com.example.aston_final_project.Status
 import com.example.aston_final_project.di.CustomToolbarComponent
 import javax.inject.Inject
 
@@ -14,7 +12,7 @@ class CustomToolbar @JvmOverloads constructor(
     private val attribute: AttributeSet? = null,
     private val defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attribute, defStyleAttr), ToolbarController {
-    private var currentStatus: Status = Status.DEFAULT
+    private var currentStatusToolbar: StatusToolbar = StatusToolbar.DEFAULT
 
     private val appComponent get() = (context.applicationContext as App).getAppComponent()
 
@@ -34,7 +32,7 @@ class CustomToolbar @JvmOverloads constructor(
                 typedArray.getString(R.styleable.CustomToolbar_toolBarTitle).toString()
             typedArray.recycle()
 
-            currentStatus = Status.fromValue(status)
+            currentStatusToolbar = StatusToolbar.fromValue(status)
 
             customToolbarComponent =
                 appComponent.customToolbarComponentFactory().create(toolBarTitle)
@@ -48,9 +46,9 @@ class CustomToolbar @JvmOverloads constructor(
         attribute?.let {
             removeAllViews()
 
-            val toolbar = when (currentStatus) {
-                Status.DEFAULT -> setupDefaultToolbar(attribute, defStyleAttr)
-                Status.SEARCH -> setupSearchToolbar(attribute, defStyleAttr)
+            val toolbar = when (currentStatusToolbar) {
+                StatusToolbar.DEFAULT -> setupDefaultToolbar(attribute, defStyleAttr)
+                StatusToolbar.SEARCH -> setupSearchToolbar(attribute, defStyleAttr)
                 else -> setupDefaultToolbar(attribute, defStyleAttr)
             }
 
@@ -65,7 +63,7 @@ class CustomToolbar @JvmOverloads constructor(
         val defaultToolbar = DefaultToolbar(context, attribute, defStyleAttr)
         defaultToolbar.enrich(defaultToolbarModel)
         defaultToolbar.onViewSearchClicked {
-            currentStatus = Status.SEARCH
+            currentStatusToolbar = StatusToolbar.SEARCH
             updateUI()
         }
         return defaultToolbar
@@ -74,14 +72,14 @@ class CustomToolbar @JvmOverloads constructor(
     private fun setupSearchToolbar(attribute: AttributeSet, defStyleAttr: Int): BaseToolbar {
         val searchToolbar = SearchToolbar(context, attribute, defStyleAttr)
         searchToolbar.onBackClicked {
-            currentStatus = Status.DEFAULT
+            currentStatusToolbar = StatusToolbar.DEFAULT
             updateUI()
         }
         return searchToolbar
     }
 
-    override fun setToolbarStatus(status: Status) {
-        currentStatus = status
+    override fun setToolbarStatus(statusToolbar: StatusToolbar) {
+        currentStatusToolbar = statusToolbar
         updateUI()
     }
 }
