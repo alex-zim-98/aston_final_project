@@ -8,7 +8,11 @@ import dagger.BindsInstance
 import dagger.Component
 
 @ApplicationScope
-@Component(modules = [AppModule::class, ViewModelFactoryModule::class])
+@Component(modules = [
+    AppModule::class,
+    NetworkModule::class,
+    ViewModelFactoryModule::class,
+    RepositoryModule::class])
 interface AppComponent {
     fun inject(activity: MainActivity)
     fun inject(fragment: HeadlinesFragment)
