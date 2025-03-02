@@ -50,6 +50,15 @@ class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>() {
             }
         }
 
+        fun createMyLifecycleScope(action: () -> Unit) {
+
+        }
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
     }
 
     companion object {

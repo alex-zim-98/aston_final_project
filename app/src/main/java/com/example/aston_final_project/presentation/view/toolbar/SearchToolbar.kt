@@ -39,15 +39,21 @@ class SearchToolbar(
         editTextSearch.doOnTextChanged { text, _, _, _ ->
             searchViewModel.sendTextQuery(SearchState.StartedChangeText(text.toString()))
         }
+        editTextSearch.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) searchViewModel.sendTextQuery(SearchState.EndChangeText)
+        }
     }
 
     override fun onBackClicked(action: () -> Unit) {
         imageViewBack.setOnClickListener {
             clearText()
             hideKeyboard()
+            unFocusEditText()
             action.invoke()
-            searchViewModel.sendTextQuery(SearchState.EndChangeText)
         }
+    }
+    private fun unFocusEditText() {
+        editTextSearch.isFocusable = false
     }
 
     private fun clearText() {
