@@ -2,7 +2,6 @@ package com.example.aston_final_project.presentation.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import com.example.aston_final_project.app.network.NetworkManager
 import com.example.aston_final_project.app.util.showText
 import com.example.aston_final_project.databinding.FragmentHeadlinesBinding
 import com.example.aston_final_project.domain.entity.Article
+import com.example.aston_final_project.domain.repository.LocalRepository
 import com.example.aston_final_project.domain.repository.RemoteRepository
 import com.example.aston_final_project.presentation.mapper.RequestMapper
 import com.example.aston_final_project.presentation.mvp.HeadlinesPresenter
@@ -38,6 +38,9 @@ class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>(), HeadlinesVie
     lateinit var remoteRepository: RemoteRepository
 
     @Inject
+    lateinit var localRepository: LocalRepository
+
+    @Inject
     lateinit var networkManager: NetworkManager
 
     @Inject
@@ -45,7 +48,12 @@ class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>(), HeadlinesVie
 
     @ProvidePresenter
     fun providePresenter(): HeadlinesPresenter {
-        return HeadlinesPresenter(remoteRepository, networkManager, requestMapper)
+        return HeadlinesPresenter(
+            remoteRepository,
+            localRepository,
+            networkManager,
+            requestMapper
+        )
     }
 
     @Inject
@@ -116,7 +124,7 @@ class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>(), HeadlinesVie
     }
 
     override fun getHeadlinesList(list: List<Article>) {
-        Log.d("sadasd", "list.joinToString()")
+
     }
 
     override fun showError(error: String) {
