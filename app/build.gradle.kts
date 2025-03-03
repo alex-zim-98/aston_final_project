@@ -43,6 +43,10 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
+
     implementation(libs.moxy)
     implementation(libs.moxy.androidx)
     implementation(libs.moxy.material)

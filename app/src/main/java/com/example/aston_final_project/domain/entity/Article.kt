@@ -11,6 +11,7 @@ data class Article(
     val publishedAt: String,
     val content: String,
     val url: String,
+    val id: Int = 0,
 ): Parcelable {
     fun toSearchString(): String {
         return "$newsTitle $content".lowercase()

@@ -12,6 +12,4 @@ class MyApp: Application(), App {
     override fun getAppComponent(): AppComponent {
         return component
     }
-
-
 }
