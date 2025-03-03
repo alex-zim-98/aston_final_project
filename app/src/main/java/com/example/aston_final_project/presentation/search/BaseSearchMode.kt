@@ -2,7 +2,7 @@ package com.example.aston_final_project.presentation.search
 
 import com.example.aston_final_project.presentation.viewmodel.request.FilteredNewsRequest
 import com.example.aston_final_project.presentation.viewmodel.request.HeadlinesRequest
-import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
 abstract class BaseSearchMode<T> {
 
@@ -18,5 +18,5 @@ abstract class BaseSearchMode<T> {
         sortBy = ""
     )
 
-    abstract suspend fun fetchDataList(): Observable<List<T>>
+    abstract fun fetchDataList(): Single<List<T>>
 }
