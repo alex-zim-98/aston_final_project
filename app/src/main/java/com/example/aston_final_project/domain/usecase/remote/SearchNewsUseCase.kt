@@ -1,4 +1,4 @@
-package com.example.aston_final_project.domain.usecase
+package com.example.aston_final_project.domain.usecase.remote
 
 import com.example.aston_final_project.domain.entity.Article
 import com.example.aston_final_project.domain.repository.RemoteRepository
