@@ -2,6 +2,7 @@ package com.example.aston_final_project.presentation.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -124,10 +125,11 @@ class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>(), HeadlinesVie
     }
 
     override fun getHeadlinesList(list: List<Article>) {
-
+        Log.d("test", list.toString())
     }
 
     override fun showError(error: String) {
         error.showText(this.requireContext())
+        Log.d("test", error)
     }
 }
