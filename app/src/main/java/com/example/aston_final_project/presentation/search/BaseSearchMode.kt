@@ -2,7 +2,6 @@ package com.example.aston_final_project.presentation.search
 
 import com.example.aston_final_project.presentation.viewmodel.request.FilteredNewsRequest
 import com.example.aston_final_project.presentation.viewmodel.request.HeadlinesRequest
-import io.reactivex.rxjava3.core.Single
 
 abstract class BaseSearchMode<T> {
 
@@ -18,5 +17,8 @@ abstract class BaseSearchMode<T> {
         sortBy = ""
     )
 
-    abstract fun fetchDataList(): Single<List<T>>
+    abstract fun fetchDataList(
+        doOnSuccess: (articles: List<T>) -> Unit,
+        doOnError: (error: String) -> Unit,
+        loading: (isLoading: Boolean) -> Unit)
 }
