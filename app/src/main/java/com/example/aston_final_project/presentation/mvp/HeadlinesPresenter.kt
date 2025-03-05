@@ -1,48 +1,85 @@
 package com.example.aston_final_project.presentation.mvp
 
 import com.example.aston_final_project.app.network.NetworkManager
-import com.example.aston_final_project.app.util.checkInternetConnection
+import com.example.aston_final_project.domain.entity.Article
 import com.example.aston_final_project.domain.repository.LocalRepository
 import com.example.aston_final_project.domain.repository.RemoteRepository
 import com.example.aston_final_project.presentation.mapper.RequestMapper
-import com.example.aston_final_project.presentation.search.HeadlinesSearchSearchMode
+import com.example.aston_final_project.presentation.search.HeadlinesPage
+import com.example.aston_final_project.presentation.viewmodel.request.HeadlinesRequest
 import moxy.MvpPresenter
 import javax.inject.Inject
 
 class HeadlinesPresenter @Inject constructor(
     remoteRepository: RemoteRepository,
     localRepository: LocalRepository,
-    private val networkManager: NetworkManager,
+    networkManager: NetworkManager,
     requestMapper: RequestMapper
 ) : MvpPresenter<HeadlinesView>() {
-    private var isLoading = false
-    private val headlinesEverythingList = HeadlinesSearchSearchMode(
-        remoteRepository,
-        localRepository,
-        requestMapper
+
+    private var presenterState: PresenterState = PresenterState(
+        isLoading = false,
+        listTopHeadlines = listOf(),
+        numberPage = 1
     )
 
-    fun searchNews() {
-        if (isLoading) return
+    private val headlinesPage = HeadlinesPage(
+        remoteRepository,
+        localRepository,
+        requestMapper,
+        networkManager
+    )
 
-        isLoading = true
+    fun loadNews(request: HeadlinesRequest) {
+        startLoading()
 
-        networkManager.checkInternetConnection(
-            doOnSuccess = { searchByInternet() },
-            doOnFail = {}
+        updateState { copy(numberPage = request.page) }
+
+        headlinesPage.fetchDataNewsList(
+            doOnSuccess = { articles ->
+                viewState.getHeadlinesList(articles)
+                          },
+            doOnError = { error -> viewState.showError(error) },
+            loading = { loading ->  updateState { copy(isLoading = loading) } },
+            numberPage = request.page
         )
     }
 
-    private fun searchByInternet() {
-        headlinesEverythingList.fetchDataList(
-            doOnSuccess = { articles -> viewState.getHeadlinesList(articles)},
-            doOnError = { viewState.showError(it) },
-            loading = { isLoading = it }
+    private fun customPagination(page: Int, articles: List<Article>) {
+        presenterState
+        if (presenterState.numberPage < page) {
+            updateState {
+                copy(
+                    listTopHeadlines = articles,
+                    numberPage = presenterState.numberPage + 1
+                )
+            }
+        } else {
+            updateState { copy(listTopHeadlines = articles.toMutableList()) }
+        }
+    }
+
+    fun searchNews() {
+        startLoading()
+
+        headlinesPage.fetchDataSearchList(
+            doOnSuccess = { articles -> viewState.getHeadlinesList(articles) },
+            doOnError = { error -> viewState.showError(error) },
+            loading = { loading -> updateState { copy(isLoading = loading) } }
         )
+    }
+
+    fun updateState(update: PresenterState.() -> PresenterState) {
+        presenterState = presenterState.update()
+    }
+
+    private fun startLoading() {
+        if (presenterState.isLoading) return
+        updateState { copy(isLoading = true) }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        headlinesEverythingList.clearCompositeDisposable()
+        headlinesPage.clearCompositeDisposable()
     }
 }
