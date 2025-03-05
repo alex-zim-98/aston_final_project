@@ -17,7 +17,9 @@ fun <T: View> View.find(@IdRes idRes: Int): Lazy<T> {
     }
 }
 
-fun NetworkManager.checkInternetConnection(doOnSuccess: () -> Unit, doOnFail: () -> Unit) {
+fun NetworkManager.checkInternetConnection(
+    doOnSuccess: () -> Unit,
+    doOnFail: () -> Unit) {
     if (this.isInternetAvailable()) doOnSuccess.invoke()
     else doOnFail.invoke()
 }
