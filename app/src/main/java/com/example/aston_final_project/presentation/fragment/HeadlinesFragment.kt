@@ -125,7 +125,7 @@ class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>(), HeadlinesVie
     }
 
     override fun getHeadlinesList(list: List<Article>) {
-        Log.d("test", list.toString())
+        Log.d("test121212", list.toString())
     }
 
     override fun showError(error: String) {
