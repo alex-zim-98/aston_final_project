@@ -7,7 +7,7 @@ abstract class BaseSearchMode<T> {
 
     protected val headlinesRequest = HeadlinesRequest(
         category = "",
-        page = 10
+        page = START_PAGE
     )
 
     protected val filteredNewsRequest = FilteredNewsRequest(
@@ -17,8 +17,20 @@ abstract class BaseSearchMode<T> {
         sortBy = ""
     )
 
-    abstract fun fetchDataList(
+    abstract fun fetchDataSearchList(
         doOnSuccess: (articles: List<T>) -> Unit,
         doOnError: (error: String) -> Unit,
-        loading: (isLoading: Boolean) -> Unit)
+        loading: (isLoading: Boolean) -> Unit
+    )
+
+    abstract fun fetchDataNewsList(
+        doOnSuccess: (articles: List<T>) -> Unit,
+        doOnError: (error: String) -> Unit,
+        loading: (isLoading: Boolean) -> Unit,
+        numberPage: Int
+    )
+
+    companion object {
+        private const val START_PAGE = 1
+    }
 }
