@@ -42,6 +42,9 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.swiperefreshlayout)
+
+    implementation(libs.glide)
 
     implementation(libs.androidx.room.rxjava3)
     implementation(libs.androidx.room.runtime)
