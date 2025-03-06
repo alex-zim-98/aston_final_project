@@ -16,6 +16,18 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         (requireActivity().application as App).getAppComponent()
     }
 
+    protected var isConfigChanged = false
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("configChanged", true)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        isConfigChanged = savedInstanceState?.getBoolean("configChanged") ?: false
+    }
+
     abstract fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
     override fun onCreateView(
