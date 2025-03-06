@@ -11,6 +11,7 @@ import com.example.aston_final_project.domain.usecase.local.InsertNewsEverything
 import com.example.aston_final_project.domain.usecase.remote.GetTopHeadlinesUseCase
 import com.example.aston_final_project.domain.usecase.remote.SearchNewsUseCase
 import com.example.aston_final_project.presentation.mapper.RequestMapper
+import com.example.aston_final_project.presentation.viewmodel.request.HeadlinesRequest
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
@@ -53,13 +54,13 @@ class HeadlinesPage(
         doOnSuccess: (articles: List<Article>) -> Unit,
         doOnError: (error: String) -> Unit,
         loading: (isLoading: Boolean) -> Unit,
-        numberPage: Int
+        request: HeadlinesRequest
     ) {
 
         var disposable: Disposable? = null
 
         networkManager.checkInternetConnection(
-            doOnSuccess = { disposable = loadNewsList(doOnSuccess, doOnError, loading, numberPage) },
+            doOnSuccess = { disposable = loadNewsList(doOnSuccess, doOnError, loading, request) },
             doOnFail = { showFragmentError() }
         )
 
@@ -70,9 +71,9 @@ class HeadlinesPage(
         doOnSuccess: (articles: List<Article>) -> Unit,
         doOnError: (error: String) -> Unit,
         loading: (isLoading: Boolean) -> Unit,
-        numberPage: Int
+        request: HeadlinesRequest
     ): Disposable {
-        return getTopHeadlinesUseCase.invoke(requestMapper.headlinesRequestToMap(headlinesRequest.copy(page = numberPage)))
+        return getTopHeadlinesUseCase.invoke(requestMapper.headlinesRequestToMap(request))
             .observeOn(AndroidSchedulers.mainThread())
             .doFinally { loading.invoke(false) }
             .subscribe({ topHeadlinesNews ->

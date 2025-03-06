@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -16,9 +17,12 @@ import com.example.aston_final_project.databinding.FragmentHeadlinesBinding
 import com.example.aston_final_project.domain.entity.Article
 import com.example.aston_final_project.domain.repository.LocalRepository
 import com.example.aston_final_project.domain.repository.RemoteRepository
+import com.example.aston_final_project.presentation.adapter.ArticlesAdapter
+import com.example.aston_final_project.presentation.helper.ImageHelper
 import com.example.aston_final_project.presentation.mapper.RequestMapper
 import com.example.aston_final_project.presentation.mvp.HeadlinesPresenter
 import com.example.aston_final_project.presentation.mvp.HeadlinesView
+import com.example.aston_final_project.presentation.mvp.PresenterState
 import com.example.aston_final_project.presentation.viewmodel.SearchState
 import com.example.aston_final_project.presentation.viewmodel.SearchViewModel
 import com.example.aston_final_project.presentation.viewmodel.ViewModelFactory
@@ -29,11 +33,15 @@ import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>(), HeadlinesView {
+    private lateinit var adapter: ArticlesAdapter
 
     private val moxyDelegate = MvpDelegate(this)
 
     @InjectPresenter
     lateinit var presenter: HeadlinesPresenter
+
+    @Inject
+    lateinit var imageHelper: ImageHelper
 
     @Inject
     lateinit var remoteRepository: RemoteRepository
@@ -83,19 +91,39 @@ class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>(), HeadlinesVie
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        presenter.setRestoreFragment(isConfigChanged)
+
+        adapter = ArticlesAdapter(
+            onClickAction = {  },
+            onReachEnd = {
+                presenter.loadNews("general")
+            },
+            imageHelper = imageHelper
+        )
+
+        binding.layoutArticles.recyclerView.adapter = adapter
+
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 searchViewModel.searchState.collect {
                     when (it) {
                         is SearchState.StartedChangeText -> {
-                            if (it.text.length == 1) presenter.searchNews()
+                            if (it.text.length == 1) {
+                                presenter.searchNews()
+                            }
+                            adapter.setIsSearchingMode(it.text.isNotEmpty())
+                            binding.tabLayout.isVisible = false
                         }
 
-                        SearchState.EndChangeText -> {}
+                        SearchState.EndChangeText -> {
+                            presenter.restoreState()
+                        }
                     }
                 }
             }
         }
+
+        presenter.loadNews("general")
 
     }
 
@@ -125,11 +153,17 @@ class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>(), HeadlinesVie
     }
 
     override fun getHeadlinesList(list: List<Article>) {
-        Log.d("test121212", list.toString())
+        adapter.submitList(list)
     }
 
     override fun showError(error: String) {
         error.showText(this.requireContext())
         Log.d("test", error)
+    }
+
+    override fun fetchPresenterState(presenter: PresenterState) {
+        binding.tabLayout.isVisible = true
+        binding.progressBarHeadlines.isVisible = presenter.isLoading
+        adapter.submitList(presenter.listTopHeadlines)
     }
 }

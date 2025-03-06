@@ -9,7 +9,7 @@ class RequestMapper @Inject constructor() {
         return mapOf(
             "category" to headlinesRequest.category,
             "pageSize" to headlinesRequest.pageSize.toString(),
-            "page" to headlinesRequest.page.toString()
+            "page" to headlinesRequest.pageNumber.toString()
         )
     }
 

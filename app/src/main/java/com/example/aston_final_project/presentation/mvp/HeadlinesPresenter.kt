@@ -1,7 +1,6 @@
 package com.example.aston_final_project.presentation.mvp
 
 import com.example.aston_final_project.app.network.NetworkManager
-import com.example.aston_final_project.domain.entity.Article
 import com.example.aston_final_project.domain.repository.LocalRepository
 import com.example.aston_final_project.domain.repository.RemoteRepository
 import com.example.aston_final_project.presentation.mapper.RequestMapper
@@ -30,32 +29,42 @@ class HeadlinesPresenter @Inject constructor(
         networkManager
     )
 
-    fun loadNews(request: HeadlinesRequest) {
+    fun loadNews(category: String) {
+
+        wasChangedConfiguration()
         startLoading()
 
-        updateState { copy(numberPage = request.page) }
+        updateState { copy(category = category) }
+        viewState.fetchPresenterState(presenterState)
 
         headlinesPage.fetchDataNewsList(
             doOnSuccess = { articles ->
                 viewState.getHeadlinesList(articles)
-                          },
+                updateState {
+                    copy(
+                        category = category,
+                        numberPage = presenterState.numberPage + 1,
+                        listTopHeadlines = articles
+                    )
+                }
+            },
             doOnError = { error -> viewState.showError(error) },
-            loading = { loading ->  updateState { copy(isLoading = loading) } },
-            numberPage = request.page
+            loading = {
+                    loading -> updateState { copy(isLoading = loading) }
+                viewState.fetchPresenterState(presenterState)
+            },
+            request = HeadlinesRequest(
+                category = presenterState.category,
+                pageNumber = presenterState.numberPage
+            )
         )
     }
 
-    private fun customPagination(page: Int, articles: List<Article>) {
-        presenterState
-        if (presenterState.numberPage < page) {
-            updateState {
-                copy(
-                    listTopHeadlines = articles,
-                    numberPage = presenterState.numberPage + 1
-                )
-            }
-        } else {
-            updateState { copy(listTopHeadlines = articles.toMutableList()) }
+    private fun wasChangedConfiguration() {
+        if (presenterState.isRestoreFragment) {
+            viewState.getHeadlinesList(presenterState.listTopHeadlines)
+            updateState { copy(isRestoreFragment = false) }
+            return
         }
     }
 
@@ -71,6 +80,14 @@ class HeadlinesPresenter @Inject constructor(
 
     fun updateState(update: PresenterState.() -> PresenterState) {
         presenterState = presenterState.update()
+    }
+
+    fun setRestoreFragment(changed: Boolean) {
+        updateState { copy(isRestoreFragment = changed) }
+    }
+
+    fun restoreState() {
+        viewState.fetchPresenterState(presenterState)
     }
 
     private fun startLoading() {

@@ -9,4 +9,5 @@ import moxy.viewstate.strategy.StateStrategyType
 interface HeadlinesView : MvpView {
     fun getHeadlinesList(list: List<Article>)
     fun showError(error: String)
+    fun fetchPresenterState(presenter: PresenterState)
 }
