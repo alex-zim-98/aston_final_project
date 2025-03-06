@@ -7,7 +7,7 @@ abstract class BaseSearchMode<T> {
 
     protected val headlinesRequest = HeadlinesRequest(
         category = "",
-        page = START_PAGE
+        pageNumber = START_PAGE
     )
 
     protected val filteredNewsRequest = FilteredNewsRequest(
@@ -27,7 +27,7 @@ abstract class BaseSearchMode<T> {
         doOnSuccess: (articles: List<T>) -> Unit,
         doOnError: (error: String) -> Unit,
         loading: (isLoading: Boolean) -> Unit,
-        numberPage: Int
+        request: HeadlinesRequest
     )
 
     companion object {
