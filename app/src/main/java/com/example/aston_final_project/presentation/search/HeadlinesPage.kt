@@ -67,10 +67,10 @@ class HeadlinesPage(
         disposable?.let { compositeDisposable.add(it) }
     }
 
-    private fun loadNewsList(
-        doOnSuccess: (articles: List<Article>) -> Unit,
-        doOnError: (error: String) -> Unit,
-        loading: (isLoading: Boolean) -> Unit,
+    private inline fun loadNewsList(
+        crossinline doOnSuccess: (articles: List<Article>) -> Unit,
+        crossinline doOnError: (error: String) -> Unit,
+        crossinline loading: (isLoading: Boolean) -> Unit,
         request: HeadlinesRequest
     ): Disposable {
         return getTopHeadlinesUseCase.invoke(requestMapper.headlinesRequestToMap(request))
@@ -81,10 +81,10 @@ class HeadlinesPage(
             }, { doOnError.invoke(it.toString()) })
     }
 
-    private fun searchByInternet(
-        doOnSuccess: (articles: List<Article>) -> Unit,
-        doOnError: (error: String) -> Unit,
-        loading: (isLoading: Boolean) -> Unit
+    private inline fun searchByInternet(
+        noinline doOnSuccess: (articles: List<Article>) -> Unit,
+        noinline doOnError: (error: String) -> Unit,
+        crossinline loading: (isLoading: Boolean) -> Unit
     ): Disposable {
         return searchNewsUseCase.invoke(requestMapper.filteredNewsRequestToMap(filteredNewsRequest))
             .flatMap { response ->
@@ -96,10 +96,10 @@ class HeadlinesPage(
             .subscribe({}, { doOnError(it.toString()) })
     }
 
-    private fun searchByCache(
-        doOnSuccess: (articles: List<Article>) -> Unit,
-        doOnError: (error: String) -> Unit,
-        loading: (isLoading: Boolean) -> Unit
+    private inline fun searchByCache(
+        crossinline doOnSuccess: (articles: List<Article>) -> Unit,
+        crossinline doOnError: (error: String) -> Unit,
+        crossinline loading: (isLoading: Boolean) -> Unit
     ): Disposable {
         return getNewsEverythingUseCase(
             doOnSuccess = { doOnSuccess.invoke(it) },
