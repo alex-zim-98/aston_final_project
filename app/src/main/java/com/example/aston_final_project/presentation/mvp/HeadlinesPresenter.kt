@@ -35,7 +35,6 @@ class HeadlinesPresenter @Inject constructor(
         startLoading()
 
         updateState { copy(category = category) }
-        viewState.fetchPresenterState(presenterState)
 
         headlinesPage.fetchDataNewsList(
             doOnSuccess = { articles ->
@@ -44,7 +43,7 @@ class HeadlinesPresenter @Inject constructor(
                     copy(
                         category = category,
                         numberPage = presenterState.numberPage + 1,
-                        listTopHeadlines = articles
+                        listTopHeadlines = presenterState.listTopHeadlines + articles
                     )
                 }
             },
