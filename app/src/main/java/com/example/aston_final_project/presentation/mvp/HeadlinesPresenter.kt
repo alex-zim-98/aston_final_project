@@ -59,14 +59,6 @@ class HeadlinesPresenter @Inject constructor(
         )
     }
 
-    private fun wasChangedConfiguration() {
-        if (presenterState.isRestoreFragment) {
-            viewState.getHeadlinesList(presenterState.listTopHeadlines)
-            updateState { copy(isRestoreFragment = false) }
-            return
-        }
-    }
-
     fun searchNews() {
         startLoading()
 
@@ -77,16 +69,28 @@ class HeadlinesPresenter @Inject constructor(
         )
     }
 
-    fun updateState(update: PresenterState.() -> PresenterState) {
-        presenterState = presenterState.update()
-    }
-
     fun setRestoreFragment(changed: Boolean) {
         updateState { copy(isRestoreFragment = changed) }
     }
 
     fun restoreState() {
         viewState.fetchPresenterState(presenterState)
+    }
+
+    fun onReachEnd() {
+        loadNews(presenterState.category)
+    }
+
+    private fun wasChangedConfiguration() {
+        if (presenterState.isRestoreFragment) {
+            viewState.getHeadlinesList(presenterState.listTopHeadlines)
+            updateState { copy(isRestoreFragment = false) }
+            return
+        }
+    }
+
+    private fun updateState(update: PresenterState.() -> PresenterState) {
+        presenterState = presenterState.update()
     }
 
     private fun startLoading() {
