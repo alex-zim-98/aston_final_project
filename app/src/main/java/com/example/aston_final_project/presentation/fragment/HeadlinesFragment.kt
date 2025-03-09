@@ -26,12 +26,15 @@ import com.example.aston_final_project.presentation.mvp.PresenterState
 import com.example.aston_final_project.presentation.viewmodel.SearchState
 import com.example.aston_final_project.presentation.viewmodel.SearchViewModel
 import com.example.aston_final_project.presentation.viewmodel.ViewModelFactory
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import moxy.MvpDelegate
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
+@OptIn(FlowPreview::class)
 class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>(), HeadlinesView {
     private lateinit var adapter: ArticlesAdapter
 
@@ -96,7 +99,7 @@ class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>(), HeadlinesVie
         adapter = ArticlesAdapter(
             onClickAction = {  },
             onReachEnd = {
-                presenter.loadNews("general")
+                presenter.onReachEnd()
             },
             imageHelper = imageHelper
         )
@@ -105,13 +108,17 @@ class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>(), HeadlinesVie
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                searchViewModel.searchState.collect {
+                searchViewModel.searchState
+                    .debounce(DELAY_TIME)
+                    .collect {
                     when (it) {
                         is SearchState.StartedChangeText -> {
                             if (it.text.length == 1) {
                                 presenter.searchNews()
+                            } else {
+                                adapter.filter(it.text)
                             }
-                            adapter.setIsSearchingMode(it.text.isNotEmpty())
+                            adapter.setIsSearchingModeEnabled(true)
                             binding.tabLayout.isVisible = false
                         }
 
@@ -123,7 +130,7 @@ class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>(), HeadlinesVie
             }
         }
 
-        presenter.loadNews("general")
+        presenter.loadNews(INITIAL_TAB_PAGE)
 
     }
 
@@ -147,11 +154,6 @@ class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>(), HeadlinesVie
         moxyDelegate.onDestroy()
     }
 
-    companion object {
-        fun newInstance() =
-            HeadlinesFragment()
-    }
-
     override fun getHeadlinesList(list: List<Article>) {
         adapter.submitList(list)
     }
@@ -163,7 +165,16 @@ class HeadlinesFragment : BaseFragment<FragmentHeadlinesBinding>(), HeadlinesVie
 
     override fun fetchPresenterState(presenter: PresenterState) {
         binding.tabLayout.isVisible = true
+        adapter.setIsSearchingModeEnabled(false)
         binding.progressBarHeadlines.isVisible = presenter.isLoading
         adapter.submitList(presenter.listTopHeadlines)
     }
+
+    companion object {
+        private const val INITIAL_TAB_PAGE = "general"
+        private const val DELAY_TIME = 400L
+        fun newInstance() =
+            HeadlinesFragment()
+    }
+
 }

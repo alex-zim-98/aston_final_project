@@ -51,7 +51,6 @@ class ArticlesAdapter(
             newsText.text = item.newsTitle
 
             chanelIcon.setImageDrawable(imageHelper.resToDrawable(context, channelIcon))
-            imageHelper
             newsImage.validateImage(imageUrl)
 
             val resIdBackground =
@@ -69,14 +68,8 @@ class ArticlesAdapter(
         }
     }
 
-    fun setIsSearchingMode(isEnabled: Boolean) {
+    fun setIsSearchingModeEnabled(isEnabled: Boolean) {
         this.isSearchingModeEnabled = isEnabled
-    }
-
-
-    override fun submitList(list: List<Article>?) {
-        fullList = list ?: listOf()
-        super.submitList(list)
     }
 
     fun filter(query: String) {
@@ -86,6 +79,12 @@ class ArticlesAdapter(
             fullList?.filter { it.toSearchString().contains(query, ignoreCase = true) }
         }
         super.submitList(filteredList)
+    }
+
+
+    override fun submitList(list: List<Article>?) {
+        fullList = list ?: listOf()
+        super.submitList(list)
     }
 
     private fun customPaging(position: Int) {
