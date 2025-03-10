@@ -23,6 +23,7 @@ import com.example.aston_final_project.presentation.mapper.RequestMapper
 import com.example.aston_final_project.presentation.mvp.HeadlinesPresenter
 import com.example.aston_final_project.presentation.mvp.HeadlinesView
 import com.example.aston_final_project.presentation.mvp.PresenterState
+import com.example.aston_final_project.presentation.navigation.AppRouter
 import com.example.aston_final_project.presentation.viewmodel.SearchState
 import com.example.aston_final_project.presentation.viewmodel.SearchViewModel
 import com.example.aston_final_project.presentation.viewmodel.ViewModelFactory

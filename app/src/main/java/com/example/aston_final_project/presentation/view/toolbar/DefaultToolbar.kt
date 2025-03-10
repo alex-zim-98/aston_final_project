@@ -31,4 +31,8 @@ class DefaultToolbar(
         imageViewSearch.setOnClickListener { action.invoke() }
     }
 
+    override fun onFilterButtonClicked(action: () -> Unit) {
+        imageViewFilter.setOnClickListener { action.invoke() }
+    }
+
 }

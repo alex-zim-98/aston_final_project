@@ -70,6 +70,9 @@ class CustomToolbar @JvmOverloads constructor(
             currentStatusToolbar = StatusToolbar.SEARCH
             updateUI()
         }
+        defaultToolbar.onFilterButtonClicked {
+
+        }
         return defaultToolbar
     }
 
